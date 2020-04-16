@@ -32,7 +32,7 @@
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true,//设置元素是否可以点击
         probeType: this.probeType,//设置是否监听滚动
-        pullUpLoad: this.pullUpLoad
+        pullUpLoad:this.pullUpLoad//设置是否上拉加载更多
       });
 
       //2.监听滚动位置
@@ -41,11 +41,16 @@
         this.$emit('scroll', position)//把滚动事件发送出去，参数为position
       });
 
-      //3监听上拉加载更多
+      //3.监听上拉加载更多
       this.scroll.on('pullingUp', () => {
-        this.$emit('pullingUp');//把上拉加载更多事件传出去
-        this.scroll.finishPullUp()//结束上拉加载更多事件，不然只能加载一次
+        this.$emit('pullingUp');
+        this.scroll.finishPullUp()//结束上拉加载更多，不然只能加载一次
       })
+    },
+    methods: {
+      refresh(){
+        this.scroll && this.scroll.refresh()
+      },//对refresh函数的稍微封装，方便使用
     }
   }
 </script>
